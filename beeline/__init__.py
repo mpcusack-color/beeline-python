@@ -4,7 +4,8 @@ import logging
 import os
 import socket
 from contextlib import contextmanager
-
+from typing import Callable
+from typing_extensions import ParamSpec, TypeVar
 from libhoney import Client
 from beeline.trace import SynchronousTracer
 from beeline.version import VERSION
@@ -52,6 +53,8 @@ except (ImportError, AttributeError):
     def in_async_code():
         return False
 
+BeelineTracedParamSpec = ParamSpec('BeelineTracedParamSpec')
+BeelineTracedReturn = TypeVar('BeelineTracedReturn')
 
 class Beeline(object):
     def __init__(self,
@@ -271,7 +274,10 @@ class Beeline(object):
             self.tracer_impl.finish_span(span)
             span = self.tracer_impl.get_active_span()
 
-    def traced(self, name, trace_id=None, parent_id=None):
+    def traced(self, name, trace_id=None, parent_id=None) -> Callable[
+        [Callable[BeelineTracedParamSpec, BeelineTracedReturn]],
+        Callable[BeelineTracedParamSpec, BeelineTracedReturn],
+    ]:
         return traced_impl(tracer_fn=self.tracer, name=name, trace_id=trace_id, parent_id=parent_id)
 
     def traced_thread(self, fn):

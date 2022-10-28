@@ -785,7 +785,7 @@ def close():
     _GBL = None
 
 
-def traced(self, name:str, trace_id:Optional[str]=None, parent_id:Optional[str]=None) -> Callable[
+def traced(name:str, trace_id:Optional[str]=None, parent_id:Optional[str]=None) -> Callable[
     [Callable[BeelineTracedParamSpec, BeelineTracedReturn]],
     Callable[BeelineTracedParamSpec, BeelineTracedReturn],
 ]:

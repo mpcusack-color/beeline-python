@@ -4,7 +4,7 @@ import logging
 import os
 import socket
 from contextlib import contextmanager
-from typing import Callable
+from typing import Callable, Optional
 from typing_extensions import ParamSpec, TypeVar
 from libhoney import Client
 from beeline.trace import SynchronousTracer

@@ -274,7 +274,7 @@ class Beeline(object):
             self.tracer_impl.finish_span(span)
             span = self.tracer_impl.get_active_span()
 
-    def traced(self, name, trace_id=None, parent_id=None) -> Callable[
+    def traced(self, name:str, trace_id:Optional[str]=None, parent_id:Optional[str]=None) -> Callable[
         [Callable[BeelineTracedParamSpec, BeelineTracedReturn]],
         Callable[BeelineTracedParamSpec, BeelineTracedReturn],
     ]:
@@ -785,7 +785,10 @@ def close():
     _GBL = None
 
 
-def traced(name, trace_id=None, parent_id=None):
+def traced(self, name:str, trace_id:Optional[str]=None, parent_id:Optional[str]=None) -> Callable[
+    [Callable[BeelineTracedParamSpec, BeelineTracedReturn]],
+    Callable[BeelineTracedParamSpec, BeelineTracedReturn],
+]:
     '''
     Function decorator to wrap an entire function in a trace span. If no trace
     is active in the current thread, starts a new trace, and the wrapping span
